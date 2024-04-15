@@ -1,0 +1,26 @@
+version: '3.9'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres
+    env_file:
+      - .env.dev
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d postgres" ]
+      interval: 5s
+      timeout: 10s
+      retries: 5
+
+  backend:
+    build:
+      dockerfile: Dockerfile
+    env_file:
+      - .env.dev
+    command:
+      - go
+      - run
+      - ./cmd/app/main.go
+    depends_on:
+      postgres:
+        condition: service_healthy

@@ -1,0 +1,218 @@
+openapi: 3.0.3
+info:
+  title: Swagger Library
+  description: Simple swagger of books-library service
+  version: v1
+servers:
+  - url: 'http://localhost:8080/api/v1'
+paths:
+  /auth/register:
+    post:
+      tags:
+        - Auth
+      description: Register new user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - login
+                - password
+                - first_name
+                - last_name
+                - birth_date
+              type: object
+              properties:
+                login:
+                  type: string
+                  default: "admin"
+                  description: "user login"
+                password:
+                  type: string
+                  default: "admin"
+                  description: "user password"
+                first_name:
+                  type: string
+                  default: "admin"
+                  description: "user name"
+                last_name:
+                  type: string
+                  default: "admin"
+                  description: "user surname"
+                patronymic:
+                  type: string
+                  description: "user patronymic"
+                  default: "admin"
+                birth_date:
+                  type: string
+                  description: "user birth date"
+                  default: "2000-04-13T12:34:56Z"
+
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "ok"
+        400:
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "error"
+                  error:
+                    type: string
+                    default: "invalid request"
+        422:
+          description: login already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "error"
+                  error:
+                    type: string
+                    default: "login already exists"
+
+  /auth/login:
+    post:
+      tags:
+        - Auth
+      description: User authentication
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - login
+                - password
+              type: object
+              properties:
+                login:
+                  type: string
+                  default: "admin"
+                  description: "user login"
+                password:
+                  type: string
+                  default: "admin"
+                  description: "user password"
+      responses:
+        400:
+          description: wrong credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "error"
+                  error:
+                    type: string
+                    default: "invalid credentials"
+
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    description: "auth token"
+
+
+  /books:
+    post:
+      tags:
+        - Books
+      description: create new book
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - title
+                - description
+                - age_group
+                - publishing_date
+                - publishing_date
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: "book title"
+                  default: "Граф Монте-Кристо"
+                description:
+                  type: string
+                  description: "book description"
+                  default: "Приключенческий роман Александра Дюма"
+                age_group:
+                  type: integer
+                  description: "book minimum age"
+                  default: 18
+                publishing_date:
+                  type: string
+                  description: "book publishing date"
+                  default: "2006-01-02T15:04:05Z"
+      responses:
+        401:
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "unauthorized"
+        400:
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "invalid request"
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    description: "book id"
+                    default: 1
+                  title:
+                    type: string
+                    description: "book title"
+                    default: "Граф Монте-Кристо"
+                  description:
+                    type: string
+                    description: "book description"
+                    default: "Приключенческий роман Александра Дюма"
+                  age_group:
+                    type: integer
+                    description: "book minimum age"
+                    default: 18
+                  publishing_date:
+                    type: string
+                    description: "book publishing date"
+                    default: "2006-01-02T15:04:05Z"
