@@ -8,7 +8,6 @@ import (
 	utils "simple-golang-api/pkg/passwords"
 	desc "simple-golang-api/pkg/v1/book"
 	"testing"
-	"time"
 )
 
 const (
@@ -17,6 +16,12 @@ const (
 
 func TestCreateBook(t *testing.T) {
 	jwtToken, _ := utils.CreateJwtToken(model.UserCredentials{})
+	book := desc.Book{
+		Title:          "Test",
+		Description:    "Test",
+		AgeGroup:       18,
+		PublishingDate: "01-01-2000",
+	}
 
 	u := url.URL{
 		Scheme: "http",
@@ -26,12 +31,7 @@ func TestCreateBook(t *testing.T) {
 	e := httpexpect.New(t, u.String())
 
 	t.Run("success", func(t *testing.T) {
-		req := e.POST(booksPath).WithJSON(desc.Book{
-			Title:          "Test",
-			Description:    "Test",
-			AgeGroup:       18,
-			PublishingDate: time.Now(),
-		}).WithHeader("Authorization", jwtToken).Expect().Status(http.StatusOK).JSON().Object()
+		req := e.POST(booksPath).WithJSON(book).WithHeader("Authorization", jwtToken).Expect().Status(http.StatusOK).JSON().Object()
 
 		schema := `{
 		  "$schema": "http://json-schema.org/draft-07/schema#",
@@ -63,12 +63,7 @@ func TestCreateBook(t *testing.T) {
 	})
 
 	t.Run("unauthorized", func(t *testing.T) {
-		req := e.POST(booksPath).WithJSON(desc.Book{
-			Title:          "Test",
-			Description:    "Test",
-			AgeGroup:       18,
-			PublishingDate: time.Now(),
-		}).Expect().Status(http.StatusUnauthorized).JSON().Object()
+		req := e.POST(booksPath).WithJSON(book).Expect().Status(http.StatusUnauthorized).JSON().Object()
 
 		req.Value("status").String().Contains("unauthorized")
 	})

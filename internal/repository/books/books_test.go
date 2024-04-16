@@ -8,7 +8,6 @@ import (
 	"simple-golang-api/internal/repository/books/model"
 	"simple-golang-api/internal/repository/mocks"
 	"testing"
-	"time"
 )
 
 func TestInsertBook(t *testing.T) {
@@ -16,7 +15,7 @@ func TestInsertBook(t *testing.T) {
 		Title:          "Book Title",
 		Description:    "Book Description",
 		AgeGroup:       18,
-		PublishingDate: time.Now(),
+		PublishingDate: "01-01-2000",
 	}
 
 	t.Run("success", func(t *testing.T) {

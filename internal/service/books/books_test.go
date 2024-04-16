@@ -7,7 +7,6 @@ import (
 	"simple-golang-api/internal/domain"
 	"simple-golang-api/internal/service/mocks"
 	"testing"
-	"time"
 )
 
 func TestCreateNewBook(t *testing.T) {
@@ -15,7 +14,7 @@ func TestCreateNewBook(t *testing.T) {
 		Title:          "Test",
 		Description:    "Test",
 		AgeGroup:       18,
-		PublishingDate: time.Now(),
+		PublishingDate: "01-01-2000",
 	}
 
 	t.Run("success", func(t *testing.T) {
