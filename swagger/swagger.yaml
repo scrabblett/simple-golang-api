@@ -46,7 +46,7 @@ paths:
                 birth_date:
                   type: string
                   description: "user birth date"
-                  default: "2000-04-13T12:34:56Z"
+                  default: "01-01-2000"
 
       responses:
         200:
@@ -167,7 +167,7 @@ paths:
                 publishing_date:
                   type: string
                   description: "book publishing date"
-                  default: "2006-01-02T15:04:05Z"
+                  default: "01-01-2000"
       responses:
         401:
           description: unauthorized
@@ -215,4 +215,4 @@ paths:
                   publishing_date:
                     type: string
                     description: "book publishing date"
-                    default: "2006-01-02T15:04:05Z"
+                    default: "01-01-2000"
