@@ -3,8 +3,8 @@
 package mocks
 
 import (
-	domain "awesomeProject/internal/domain"
 	context "context"
+	domain "simple-golang-api/internal/domain"
 
 	mock "github.com/stretchr/testify/mock"
 )

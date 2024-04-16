@@ -1,14 +1,14 @@
 package v1
 
 import (
-	"awesomeProject/internal/converter"
-	"awesomeProject/internal/domain"
-	desc "awesomeProject/pkg/v1/book"
-	responseFormer "awesomeProject/pkg/validator"
 	"encoding/json"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"net/http"
+	"simple-golang-api/internal/converter"
+	"simple-golang-api/internal/domain"
+	desc "simple-golang-api/pkg/v1/book"
+	responseFormer "simple-golang-api/pkg/validator"
 )
 
 func (h *Handler) initBooksRoutes(r chi.Router) {

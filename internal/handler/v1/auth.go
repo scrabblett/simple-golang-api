@@ -1,15 +1,15 @@
 package v1
 
 import (
-	userConverter "awesomeProject/internal/converter"
-	"awesomeProject/internal/domain"
-	desc "awesomeProject/pkg/v1/user"
-	responseFormer "awesomeProject/pkg/validator"
 	"encoding/json"
 	"errors"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"net/http"
+	userConverter "simple-golang-api/internal/converter"
+	"simple-golang-api/internal/domain"
+	desc "simple-golang-api/pkg/v1/user"
+	responseFormer "simple-golang-api/pkg/validator"
 )
 
 func (h *Handler) initAuthRoutes(r chi.Router) {

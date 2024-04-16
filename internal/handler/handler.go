@@ -1,13 +1,13 @@
 package handler
 
 import (
-	mw "awesomeProject/internal/handler/middleware"
-	v1 "awesomeProject/internal/handler/v1"
-	"awesomeProject/internal/service"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"go.uber.org/zap"
 	"net/http"
+	mw "simple-golang-api/internal/handler/middleware"
+	v1 "simple-golang-api/internal/handler/v1"
+	"simple-golang-api/internal/service"
 )
 
 type Handler struct {

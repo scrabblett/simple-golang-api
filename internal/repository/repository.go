@@ -1,12 +1,12 @@
 package repository
 
 import (
-	"awesomeProject/internal/repository/books"
-	bookModels "awesomeProject/internal/repository/books/model"
-	"awesomeProject/internal/repository/users"
-	userModels "awesomeProject/internal/repository/users/model"
 	"context"
 	"database/sql"
+	"simple-golang-api/internal/repository/books"
+	bookModels "simple-golang-api/internal/repository/books/model"
+	"simple-golang-api/internal/repository/users"
+	userModels "simple-golang-api/internal/repository/users/model"
 )
 
 //go:generate mockery --name UsersRepo

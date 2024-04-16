@@ -1,10 +1,10 @@
 package books
 
 import (
-	"awesomeProject/internal/repository/books/model"
 	"context"
 	"database/sql"
 	"go.uber.org/zap"
+	"simple-golang-api/internal/repository/books/model"
 )
 
 type BookRepo struct {

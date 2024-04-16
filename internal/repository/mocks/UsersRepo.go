@@ -3,8 +3,8 @@
 package mocks
 
 import (
-	model "awesomeProject/internal/repository/users/model"
 	context "context"
+	model "simple-golang-api/internal/repository/users/model"
 
 	mock "github.com/stretchr/testify/mock"
 )

@@ -1,10 +1,10 @@
 package middleware
 
 import (
-	utils "awesomeProject/pkg/passwords"
-	responseFormer "awesomeProject/pkg/validator"
 	"github.com/go-chi/render"
 	"net/http"
+	utils "simple-golang-api/pkg/passwords"
+	responseFormer "simple-golang-api/pkg/validator"
 )
 
 func JwtMiddleware() func(next http.Handler) http.Handler {

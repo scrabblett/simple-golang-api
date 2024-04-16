@@ -1,8 +1,8 @@
 package converter
 
 import (
-	"awesomeProject/internal/domain"
-	desc "awesomeProject/pkg/v1/book"
+	"simple-golang-api/internal/domain"
+	desc "simple-golang-api/pkg/v1/book"
 )
 
 func ToBookFromDesc(book *desc.Book) *domain.Book {

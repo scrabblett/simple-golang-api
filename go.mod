@@ -1,4 +1,4 @@
-module awesomeProject
+module simple-golang-api
 
 go 1.22
 
