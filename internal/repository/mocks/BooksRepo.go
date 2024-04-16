@@ -14,6 +14,34 @@ type BooksRepo struct {
 	mock.Mock
 }
 
+// GetBook provides a mock function with given fields: ctx, id
+func (_m *BooksRepo) GetBook(ctx context.Context, id int64) (model.Book, error) {
+	ret := _m.Called(ctx, id)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetBook")
+	}
+
+	var r0 model.Book
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, int64) (model.Book, error)); ok {
+		return rf(ctx, id)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, int64) model.Book); ok {
+		r0 = rf(ctx, id)
+	} else {
+		r0 = ret.Get(0).(model.Book)
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, int64) error); ok {
+		r1 = rf(ctx, id)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
 // InsertBook provides a mock function with given fields: ctx, book
 func (_m *BooksRepo) InsertBook(ctx context.Context, book *model.Book) error {
 	ret := _m.Called(ctx, book)
