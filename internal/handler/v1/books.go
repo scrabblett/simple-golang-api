@@ -22,7 +22,6 @@ func (h *Handler) createBook() http.HandlerFunc {
 		w.Header().Set("Content-Type", "application/json")
 
 		var book desc.Book
-
 		body := json.NewDecoder(r.Body)
 
 		if err := body.Decode(&book); err != nil {
@@ -40,7 +39,6 @@ func (h *Handler) createBook() http.HandlerFunc {
 		}
 
 		serviceBook := converter.ToBookFromDesc(&book)
-
 		err = h.services.Books.CreateNewBook(r.Context(), serviceBook)
 
 		if err != nil {

@@ -1,6 +1,7 @@
 package users
 
 import (
+	"context"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"simple-golang-api/internal/domain"
@@ -23,7 +24,7 @@ func TestSignIn(t *testing.T) {
 			"SignIn", mock.Anything, mock.AnythingOfType("*domain.UserCredentials"),
 		).Return(jwtToken, nil)
 
-		token, err := mockedService.SignIn(nil, &credentials)
+		token, err := mockedService.SignIn(context.TODO(), &credentials)
 
 		assert.Equal(t, token, jwtToken)
 		assert.NoError(t, err)
@@ -38,7 +39,7 @@ func TestSignIn(t *testing.T) {
 
 		mockedService.On("SignIn", mock.Anything, mock.AnythingOfType("*domain.UserCredentials")).Return(jwtToken, expectedErr)
 
-		token, err := mockedService.SignIn(nil, &credentials)
+		token, err := mockedService.SignIn(context.TODO(), &credentials)
 
 		assert.Equal(t, token, jwtToken)
 		assert.Equal(t, expectedErr, err)
@@ -62,7 +63,7 @@ func TestSignUp(t *testing.T) {
 
 		mockedService.On("SignUp", mock.Anything, mock.AnythingOfType("*domain.SignUpUser")).Return(nil)
 
-		err := mockedService.SignUp(nil, &userInfo)
+		err := mockedService.SignUp(context.TODO(), &userInfo)
 
 		assert.NoError(t, err)
 		mockedService.AssertExpectations(t)

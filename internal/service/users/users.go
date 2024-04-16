@@ -61,6 +61,10 @@ func (service *UsersService) SignUp(ctx context.Context, userInfo *domain.SignUp
 		return domain.ErrLoginAlreadyExists
 	}
 
+	if !errors.Is(err, domain.ErrInvalidCredentials) {
+		return err
+	}
+
 	userInfo.Salt, err = utils.CreateSalt()
 	userInfo.Password = utils.SaltPassword(userInfo.Password, userInfo.Salt)
 

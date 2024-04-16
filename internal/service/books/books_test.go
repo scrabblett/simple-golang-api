@@ -1,6 +1,7 @@
 package books
 
 import (
+	"context"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"simple-golang-api/internal/domain"
@@ -24,7 +25,7 @@ func TestCreateNewBook(t *testing.T) {
 			"CreateNewBook", mock.Anything, mock.AnythingOfType("*domain.Book"),
 		).Return(nil)
 
-		err := mockedService.CreateNewBook(nil, &book)
+		err := mockedService.CreateNewBook(context.TODO(), &book)
 
 		assert.NoError(t, err)
 		mockedService.AssertExpectations(t)

@@ -19,6 +19,10 @@ func (h *Handler) initAuthRoutes(r chi.Router) {
 	})
 }
 
+type AuthResponse struct {
+	Token string `json:"token"`
+}
+
 func (h *Handler) authUser() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
@@ -55,16 +59,15 @@ func (h *Handler) authUser() http.HandlerFunc {
 			return
 		}
 
-		//toDo: wrap into struct
-		render.JSON(w, r, token)
+		render.JSON(w, r, AuthResponse{Token: token})
 	}
 }
 
 func (h *Handler) signUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		var newUser desc.SignUpUser
 
+		var newUser desc.SignUpUser
 		err := json.NewDecoder(r.Body).Decode(&newUser)
 
 		if err != nil {
@@ -80,6 +83,7 @@ func (h *Handler) signUp() http.HandlerFunc {
 		}
 
 		err = responseFormer.IsRequestValid(newUser)
+
 		if err != nil {
 			responseFormer.FormValidationErrorResponse(w, r, http.StatusBadRequest, err, newUser)
 
@@ -87,7 +91,6 @@ func (h *Handler) signUp() http.HandlerFunc {
 		}
 
 		convertedBody := userConverter.ToSignUpInfoFromDesc(&newUser)
-
 		err = h.services.Users.SignUp(r.Context(), convertedBody)
 
 		if err != nil {

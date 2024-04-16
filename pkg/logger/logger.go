@@ -12,7 +12,12 @@ func SetupLogger() (*zap.Logger, error) {
 		log.Fatal("cant initialize logger %w", err)
 	}
 
-	defer zapLogger.Sync()
+	defer func(zapLogger *zap.Logger) {
+		err = zapLogger.Sync()
+		if err != nil {
+			log.Fatal("cant flush logger %w", err)
+		}
+	}(zapLogger)
 
 	zap.ReplaceGlobals(zapLogger)
 

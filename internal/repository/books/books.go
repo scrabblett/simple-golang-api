@@ -3,7 +3,6 @@ package books
 import (
 	"context"
 	"database/sql"
-	"go.uber.org/zap"
 	"simple-golang-api/internal/repository/books/model"
 )
 
@@ -19,8 +18,6 @@ func (repo *BookRepo) InsertBook(ctx context.Context, book *model.Book) error {
 	tx, err := repo.db.Begin()
 
 	if err != nil {
-		zap.L().Error("failed to create transaction", zap.Error(err))
-
 		return err
 	}
 
@@ -30,8 +27,6 @@ func (repo *BookRepo) InsertBook(ctx context.Context, book *model.Book) error {
 	`, book.Title, book.Description, book.AgeGroup, book.PublishingDate).Scan(&book.Id)
 
 	if err != nil {
-		zap.L().Error("failed to insert book", zap.Error(err))
-
 		return err
 	}
 
