@@ -7,4 +7,5 @@ func main() {
 
 	//toDo: cache requests, unit-tests
 	//toDo: add pagination for books methods in handler
+	//toDo: work with context
 }
