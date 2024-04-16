@@ -1,12 +1,12 @@
 package users
 
 import (
-	"awesomeProject/internal/domain"
-	"awesomeProject/internal/repository/users/model"
 	"context"
 	"database/sql"
 	"errors"
 	"go.uber.org/zap"
+	"simple-golang-api/internal/domain"
+	"simple-golang-api/internal/repository/users/model"
 	"time"
 )
 

@@ -1,13 +1,13 @@
 package users
 
 import (
-	"awesomeProject/internal/domain"
-	"awesomeProject/internal/repository/mocks"
-	"awesomeProject/internal/repository/users/model"
 	"context"
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"simple-golang-api/internal/domain"
+	"simple-golang-api/internal/repository/mocks"
+	"simple-golang-api/internal/repository/users/model"
 	"testing"
 )
 

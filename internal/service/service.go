@@ -1,11 +1,11 @@
 package service
 
 import (
-	"awesomeProject/internal/domain"
-	"awesomeProject/internal/repository"
-	"awesomeProject/internal/service/books"
-	"awesomeProject/internal/service/users"
 	"context"
+	"simple-golang-api/internal/domain"
+	"simple-golang-api/internal/repository"
+	"simple-golang-api/internal/service/books"
+	"simple-golang-api/internal/service/users"
 )
 
 type Services struct {

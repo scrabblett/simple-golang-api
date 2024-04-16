@@ -1,11 +1,11 @@
 package books
 
 import (
-	"awesomeProject/internal/domain"
-	"awesomeProject/internal/repository"
-	"awesomeProject/internal/repository/books/converter"
 	"context"
 	"go.uber.org/zap"
+	"simple-golang-api/internal/domain"
+	"simple-golang-api/internal/repository"
+	"simple-golang-api/internal/repository/books/converter"
 )
 
 type BookService struct {

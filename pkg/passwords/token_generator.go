@@ -1,10 +1,10 @@
 package utils
 
 import (
-	"awesomeProject/internal/repository/users/model"
 	"errors"
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
+	"simple-golang-api/internal/repository/users/model"
 	"time"
 )
 

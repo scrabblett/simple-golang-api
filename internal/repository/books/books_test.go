@@ -1,11 +1,11 @@
 package books
 
 import (
-	"awesomeProject/internal/repository/books/model"
-	"awesomeProject/internal/repository/mocks"
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
+	"simple-golang-api/internal/repository/books/model"
+	"simple-golang-api/internal/repository/mocks"
 	"testing"
 	"time"
 )

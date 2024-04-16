@@ -1,8 +1,8 @@
 package converter
 
 import (
-	"awesomeProject/internal/domain"
-	"awesomeProject/internal/repository/users/model"
+	"simple-golang-api/internal/domain"
+	"simple-golang-api/internal/repository/users/model"
 )
 
 func ToSignUpInfoFromService(info *domain.SignUpUser) *model.SignUpUser {

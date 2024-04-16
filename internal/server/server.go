@@ -1,9 +1,9 @@
 package server
 
 import (
-	"awesomeProject/internal/config"
 	"context"
 	"net/http"
+	"simple-golang-api/internal/config"
 )
 
 type Server struct {

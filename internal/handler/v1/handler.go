@@ -1,9 +1,9 @@
 package v1
 
 import (
-	"awesomeProject/internal/handler/middleware"
-	"awesomeProject/internal/service"
 	"github.com/go-chi/chi/v5"
+	"simple-golang-api/internal/handler/middleware"
+	"simple-golang-api/internal/service"
 )
 
 type Handler struct {
