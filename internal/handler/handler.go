@@ -8,6 +8,7 @@ import (
 	mw "simple-golang-api/internal/handler/middleware"
 	v1 "simple-golang-api/internal/handler/v1"
 	"simple-golang-api/internal/service"
+	"time"
 )
 
 type Handler struct {
@@ -20,7 +21,7 @@ func NewHandler(services *service.Services) *Handler {
 	}
 }
 
-func (h *Handler) Init() *chi.Mux {
+func (h *Handler) Init(duration time.Duration) *chi.Mux {
 	router := chi.NewRouter()
 
 	router.Use(
@@ -29,6 +30,7 @@ func (h *Handler) Init() *chi.Mux {
 		middleware.Recoverer,
 		middleware.URLFormat,
 		mw.ReqLogger(zap.L()),
+		mw.TimeoutMiddleware(duration),
 	)
 
 	router.Get("/health", func(w http.ResponseWriter, r *http.Request) {

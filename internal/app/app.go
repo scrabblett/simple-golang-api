@@ -43,7 +43,9 @@ func Run() {
 	services := service.NewServices(service.Deps{Repos: repos})
 	handlers := handler.NewHandler(services)
 
-	srv := server.NewServer(cfg, handlers.Init())
+	reqTimeout := cfg.Server.Timeout
+
+	srv := server.NewServer(cfg, handlers.Init(reqTimeout))
 
 	err = srv.Start()
 
