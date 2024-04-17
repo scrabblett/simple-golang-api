@@ -9,7 +9,6 @@ import (
 	"time"
 )
 
-//go:generate mockery --name UsersRepo
 type UsersRepo struct {
 	db *sql.DB
 }
