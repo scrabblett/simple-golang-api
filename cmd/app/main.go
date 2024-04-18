@@ -6,6 +6,5 @@ import (
 
 func main() {
 	app.Run()
-	//toDo: add Makefile
-	//toDo: unit-tests for new books methods
+	//toDO: refactor unit-tests, mocks for integration tests
 }
