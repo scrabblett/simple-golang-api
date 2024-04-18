@@ -1,13 +1,9 @@
-all: mocks test test_coverage vet fmt tools lint  deps
+all: deps vet fmt tools lint deps mocks test test_coverage
 
-mocks:
-	go generate ./...
-
-test:
-	go test ./... -coverprofile cover.out
-
-test_coverage:
-	 go tool cover -html cover.out
+deps:
+	@echo Install dependencies
+	go mod tidy
+	go mod download
 
 vet:
 	go vet ./...
@@ -19,12 +15,17 @@ fmt:
 
 tools:
 	go install golang.org/x/tools/cmd/goimports@latest
+	go install github.com/vektra/mockery/v2@v2.42.2
 	go get golang.org/x/tools/cmd/cover
 
 lint:
 	golangci-lint run -enable-all
 
-deps:
-	@echo Install dependencies
-	go mod tidy
-	go mod download
+mocks:
+	go generate ./...
+
+test:
+	go test ./... -coverprofile cover.out
+
+test_coverage:
+	 go tool cover -html cover.out
