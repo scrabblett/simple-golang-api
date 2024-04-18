@@ -1,10 +1,10 @@
 package main
 
-import "awesomeProject/internal/app"
+import (
+	"simple-golang-api/internal/app"
+)
 
 func main() {
 	app.Run()
-
-	//toDo: cache requests, unit-tests
-	//toDo: add pagination for books methods in handler
+	//toDO: refactor unit-tests, mocks for integration tests
 }

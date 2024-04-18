@@ -1,11 +1,10 @@
 package books
 
 import (
-	"awesomeProject/internal/domain"
-	"awesomeProject/internal/repository"
-	"awesomeProject/internal/repository/books/converter"
 	"context"
-	"go.uber.org/zap"
+	"simple-golang-api/internal/domain"
+	"simple-golang-api/internal/repository"
+	"simple-golang-api/internal/repository/books/converter"
 )
 
 type BookService struct {
@@ -22,8 +21,6 @@ func (b *BookService) CreateNewBook(ctx context.Context, book *domain.Book) erro
 	err := b.repo.InsertBook(ctx, repoBook)
 
 	if err != nil {
-		zap.L().Error("failed to create book", zap.Error(err))
-
 		return err
 	}
 
@@ -32,6 +29,34 @@ func (b *BookService) CreateNewBook(ctx context.Context, book *domain.Book) erro
 	return nil
 }
 
-func (b *BookService) Get() {
+func (b *BookService) GetBookById(ctx context.Context, id int64) (*domain.Book, error) {
+	book, err := b.repo.GetBook(ctx, id)
 
+	if err != nil {
+		return nil, err
+	}
+
+	serviceBook := converter.ToBookFromRepo(book)
+
+	return serviceBook, nil
+}
+
+func (b *BookService) UpdateBookById(ctx context.Context, id int64, book *domain.Book) error {
+	err := b.repo.UpdateBook(ctx, id, converter.ToBookFromService(book))
+
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (b *BookService) DeleteBookById(ctx context.Context, id int64) error {
+	err := b.repo.DeleteBook(ctx, id)
+
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

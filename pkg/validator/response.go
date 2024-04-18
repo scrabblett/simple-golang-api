@@ -15,7 +15,7 @@ type Response struct {
 }
 
 type ValidationError struct {
-	Param   string `json:"param"`
+	Field   string `json:"field"`
 	Message string `json:"message"`
 }
 
@@ -66,8 +66,8 @@ func FormValidationErrorResponse(w http.ResponseWriter, r *http.Request, sc int,
 
 			/// form json response with validation errors
 			ve := ValidationError{
-				Param:   jsonName,
-				Message: err.Tag(),
+				Field:   jsonName,
+				Message: generateValidateMessage(err),
 			}
 
 			outputErrors.Errors = append(outputErrors.Errors, ve)
@@ -89,4 +89,16 @@ func IsRequestValid(str interface{}) error {
 	}
 
 	return err
+}
+
+var validationErrorMessage = map[string]string{
+	"required": "field is required",
+	"min":      "value is too short",
+	"max":      "value is too long",
+}
+
+func generateValidateMessage(error validator.FieldError) string {
+	errorMessage := validationErrorMessage[error.Tag()]
+
+	return errorMessage
 }

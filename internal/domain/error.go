@@ -8,4 +8,5 @@ var (
 	ErrInvalidCredentials = errors.New("invalid credentials")
 	ErrLoginAlreadyExists = errors.New("login already exists")
 	ErrTokenExpired       = errors.New("token expired")
+	BookNotFound          = errors.New("book not found")
 )

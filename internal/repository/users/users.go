@@ -1,16 +1,14 @@
 package users
 
 import (
-	"awesomeProject/internal/domain"
-	"awesomeProject/internal/repository/users/model"
 	"context"
 	"database/sql"
 	"errors"
-	"go.uber.org/zap"
+	"simple-golang-api/internal/domain"
+	"simple-golang-api/internal/repository/users/model"
 	"time"
 )
 
-//go:generate mockery --name UsersRepo
 type UsersRepo struct {
 	db *sql.DB
 }
@@ -24,8 +22,6 @@ func (repo *UsersRepo) GetUserCredentials(ctx context.Context, login string) (mo
 	tx, err := repo.db.Begin()
 
 	if err != nil {
-		zap.L().Error("failed to create transaction", zap.Error(err))
-
 		return model.UserCredentials{}, err
 	}
 
@@ -36,14 +32,9 @@ func (repo *UsersRepo) GetUserCredentials(ctx context.Context, login string) (mo
 	).Scan(&credentials.Login, &credentials.Password, &credentials.Salt, &credentials.UserId)
 
 	if err != nil {
-
 		if errors.Is(err, sql.ErrNoRows) {
-			zap.L().Error("no user credentials found", zap.Error(err))
-
 			return model.UserCredentials{}, domain.ErrInvalidCredentials
 		}
-
-		zap.L().Error("failed to get user credentials", zap.Error(err))
 
 		return model.UserCredentials{}, err
 	}
@@ -51,8 +42,6 @@ func (repo *UsersRepo) GetUserCredentials(ctx context.Context, login string) (mo
 	err = tx.Commit()
 
 	if err != nil {
-		zap.L().Error("failed to commit transaction", zap.Error(err))
-
 		return model.UserCredentials{}, err
 	}
 
@@ -63,8 +52,6 @@ func (repo *UsersRepo) SaveUserCredentials(ctx context.Context, userInfo *model.
 	tx, err := repo.db.Begin()
 
 	if err != nil {
-		zap.L().Error("failed to create transaction", zap.Error(err))
-
 		return 0, err
 	}
 
@@ -79,8 +66,6 @@ func (repo *UsersRepo) SaveUserCredentials(ctx context.Context, userInfo *model.
 	err = tx.QueryRowContext(ctx, script, userInfo.LastName, userInfo.FirstName, userInfo.Patronymic, userInfo.BirthDate).Scan(&userId)
 
 	if err != nil {
-		zap.L().Error("failed to insert user", zap.Error(err))
-
 		return 0, err
 	}
 
@@ -91,22 +76,16 @@ func (repo *UsersRepo) SaveUserCredentials(ctx context.Context, userInfo *model.
 	res, err := tx.ExecContext(ctx, credsScript, userInfo.Login, userInfo.Password, userInfo.Salt, userId)
 
 	if err != nil {
-		zap.L().Error("failed to insert user credentials", zap.Error(err))
-
 		return 0, err
 	}
 
 	if rows, _ := res.RowsAffected(); rows == 0 {
-		zap.L().Error("user credentials not inserted")
-
-		return 0, errors.New("user credentials not inserted")
+		return 0, err
 	}
 
 	err = tx.Commit()
 
 	if err != nil {
-		zap.L().Error("failed to commit transaction", zap.Error(err))
-
 		return 0, err
 	}
 
@@ -117,8 +96,6 @@ func (repo *UsersRepo) SaveJWTToken(ctx context.Context, userId int64, jwt strin
 	tx, err := repo.db.Begin()
 
 	if err != nil {
-		zap.L().Error("failed to create transaction", zap.Error(err))
-
 		return err
 	}
 
@@ -133,16 +110,12 @@ func (repo *UsersRepo) SaveJWTToken(ctx context.Context, userId int64, jwt strin
 	rows, _ := res.RowsAffected()
 
 	if rows == 0 {
-		zap.L().Error("user token not inserted")
-
-		return errors.New("user token not inserted")
+		return err
 	}
 
 	err = tx.Commit()
 
 	if err != nil {
-		zap.L().Error("failed to commit transaction", zap.Error(err))
-
 		return err
 	}
 
@@ -157,10 +130,7 @@ func (repo *UsersRepo) GetJWTToken(ctx context.Context, userId int64) (string, e
 	err := repo.db.QueryRowContext(ctx, script, userId).Scan(&jwtToken)
 
 	if err != nil {
-
 		if errors.Is(err, sql.ErrNoRows) {
-			zap.L().Error("user have not active tokens", zap.Error(err))
-
 			return "", domain.ErrTokenExpired
 		}
 

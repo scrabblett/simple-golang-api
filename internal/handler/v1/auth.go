@@ -1,15 +1,15 @@
 package v1
 
 import (
-	userConverter "awesomeProject/internal/converter"
-	"awesomeProject/internal/domain"
-	desc "awesomeProject/pkg/v1/user"
-	responseFormer "awesomeProject/pkg/validator"
 	"encoding/json"
 	"errors"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/render"
 	"net/http"
+	userConverter "simple-golang-api/internal/converter"
+	"simple-golang-api/internal/domain"
+	desc "simple-golang-api/pkg/v1/user"
+	responseFormer "simple-golang-api/pkg/validator"
 )
 
 func (h *Handler) initAuthRoutes(r chi.Router) {
@@ -17,6 +17,10 @@ func (h *Handler) initAuthRoutes(r chi.Router) {
 		r.Post("/login", h.authUser())
 		r.Post("/register", h.signUp())
 	})
+}
+
+type AuthResponse struct {
+	Token string `json:"token"`
 }
 
 func (h *Handler) authUser() http.HandlerFunc {
@@ -55,16 +59,15 @@ func (h *Handler) authUser() http.HandlerFunc {
 			return
 		}
 
-		//toDo: wrap into struct
-		render.JSON(w, r, token)
+		render.JSON(w, r, AuthResponse{Token: token})
 	}
 }
 
 func (h *Handler) signUp() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		var newUser desc.SignUpUser
 
+		var newUser desc.SignUpUser
 		err := json.NewDecoder(r.Body).Decode(&newUser)
 
 		if err != nil {
@@ -80,6 +83,7 @@ func (h *Handler) signUp() http.HandlerFunc {
 		}
 
 		err = responseFormer.IsRequestValid(newUser)
+
 		if err != nil {
 			responseFormer.FormValidationErrorResponse(w, r, http.StatusBadRequest, err, newUser)
 
@@ -87,7 +91,6 @@ func (h *Handler) signUp() http.HandlerFunc {
 		}
 
 		convertedBody := userConverter.ToSignUpInfoFromDesc(&newUser)
-
 		err = h.services.Users.SignUp(r.Context(), convertedBody)
 
 		if err != nil {

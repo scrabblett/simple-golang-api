@@ -1,12 +1,12 @@
 package repository
 
 import (
-	"awesomeProject/internal/repository/books"
-	bookModels "awesomeProject/internal/repository/books/model"
-	"awesomeProject/internal/repository/users"
-	userModels "awesomeProject/internal/repository/users/model"
 	"context"
 	"database/sql"
+	"simple-golang-api/internal/repository/books"
+	bookModels "simple-golang-api/internal/repository/books/model"
+	"simple-golang-api/internal/repository/users"
+	userModels "simple-golang-api/internal/repository/users/model"
 )
 
 //go:generate mockery --name UsersRepo
@@ -20,6 +20,9 @@ type UsersRepo interface {
 //go:generate mockery --name BooksRepo
 type BooksRepo interface {
 	InsertBook(ctx context.Context, book *bookModels.Book) error
+	GetBook(ctx context.Context, id int64) (*bookModels.Book, error)
+	DeleteBook(ctx context.Context, id int64) error
+	UpdateBook(ctx context.Context, id int64, book *bookModels.Book) error
 }
 
 type Repositories struct {

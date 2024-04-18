@@ -1,10 +1,10 @@
 package utils
 
 import (
-	"awesomeProject/internal/domain"
 	"crypto/rand"
 	"crypto/sha256"
 	"go.uber.org/zap"
+	"simple-golang-api/internal/domain"
 )
 
 func SaltPassword(password string, salt string) string {

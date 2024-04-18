@@ -1,16 +1,15 @@
 package users
 
 import (
-	"awesomeProject/internal/domain"
-	"awesomeProject/internal/repository"
-	"awesomeProject/internal/repository/users/converter"
-	"awesomeProject/internal/repository/users/model"
-	utils "awesomeProject/pkg/passwords"
 	"context"
 	"errors"
+	"simple-golang-api/internal/domain"
+	"simple-golang-api/internal/repository"
+	"simple-golang-api/internal/repository/users/converter"
+	"simple-golang-api/internal/repository/users/model"
+	utils "simple-golang-api/pkg/passwords"
 )
 
-//go:generate mockery --name UsersService
 type UsersService struct {
 	repo repository.UsersRepo
 }
@@ -59,6 +58,10 @@ func (service *UsersService) SignUp(ctx context.Context, userInfo *domain.SignUp
 
 	if storedCreds != emptyCreds {
 		return domain.ErrLoginAlreadyExists
+	}
+
+	if !errors.Is(err, domain.ErrInvalidCredentials) {
+		return err
 	}
 
 	userInfo.Salt, err = utils.CreateSalt()

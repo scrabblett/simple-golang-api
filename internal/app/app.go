@@ -1,17 +1,17 @@
 package app
 
 import (
-	"awesomeProject/internal/config"
-	"awesomeProject/internal/handler"
-	"awesomeProject/internal/repository"
-	"awesomeProject/internal/server"
-	"awesomeProject/internal/service"
-	"awesomeProject/migrations"
-	"awesomeProject/pkg/logger"
 	"database/sql"
 	_ "github.com/lib/pq"
 	"go.uber.org/zap"
 	"log"
+	"simple-golang-api/internal/config"
+	"simple-golang-api/internal/handler"
+	"simple-golang-api/internal/repository"
+	"simple-golang-api/internal/server"
+	"simple-golang-api/internal/service"
+	"simple-golang-api/migrations"
+	"simple-golang-api/pkg/logger"
 )
 
 func Run() {
@@ -43,7 +43,9 @@ func Run() {
 	services := service.NewServices(service.Deps{Repos: repos})
 	handlers := handler.NewHandler(services)
 
-	srv := server.NewServer(cfg, handlers.Init())
+	reqTimeout := cfg.Server.Timeout
+
+	srv := server.NewServer(cfg, handlers.Init(reqTimeout))
 
 	err = srv.Start()
 

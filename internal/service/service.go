@@ -1,11 +1,11 @@
 package service
 
 import (
-	"awesomeProject/internal/domain"
-	"awesomeProject/internal/repository"
-	"awesomeProject/internal/service/books"
-	"awesomeProject/internal/service/users"
 	"context"
+	"simple-golang-api/internal/domain"
+	"simple-golang-api/internal/repository"
+	"simple-golang-api/internal/service/books"
+	"simple-golang-api/internal/service/users"
 )
 
 type Services struct {
@@ -20,6 +20,9 @@ type Deps struct {
 //go:generate mockery --name BooksService
 type BooksService interface {
 	CreateNewBook(ctx context.Context, book *domain.Book) error
+	GetBookById(ctx context.Context, id int64) (*domain.Book, error)
+	UpdateBookById(ctx context.Context, id int64, book *domain.Book) error
+	DeleteBookById(ctx context.Context, id int64) error
 }
 
 //go:generate mockery --name UsersService

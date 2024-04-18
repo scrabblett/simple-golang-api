@@ -10,7 +10,7 @@ paths:
     post:
       tags:
         - Auth
-      description: Register new user
+      summary: Register new user
       requestBody:
         content:
           application/json:
@@ -46,7 +46,7 @@ paths:
                 birth_date:
                   type: string
                   description: "user birth date"
-                  default: "2000-04-13T12:34:56Z"
+                  default: "2000-12-01"
 
       responses:
         200:
@@ -90,7 +90,7 @@ paths:
     post:
       tags:
         - Auth
-      description: User authentication
+      summary: User authentication
       requestBody:
         content:
           application/json:
@@ -135,11 +135,11 @@ paths:
                     description: "auth token"
 
 
-  /books:
+  /book:
     post:
       tags:
-        - Books
-      description: create new book
+        - Book
+      summary: Create new book
       requestBody:
         content:
           application/json:
@@ -148,7 +148,6 @@ paths:
                 - title
                 - description
                 - age_group
-                - publishing_date
                 - publishing_date
               type: object
               properties:
@@ -167,7 +166,7 @@ paths:
                 publishing_date:
                   type: string
                   description: "book publishing date"
-                  default: "2006-01-02T15:04:05Z"
+                  default: "2000-12-01"
       responses:
         401:
           description: unauthorized
@@ -215,4 +214,260 @@ paths:
                   publishing_date:
                     type: string
                     description: "book publishing date"
-                    default: "2006-01-02T15:04:05Z"
+                    default: "2000-12-01"
+  /book/{id}:
+    put:
+      tags:
+        - Book
+      summary: Update existing book
+      parameters:
+        - in: path
+          name: id
+          description: book id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - title
+                - description
+                - age_group
+                - publishing_date
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: "book title"
+                  default: "Граф Монте-Кристо"
+                description:
+                  type: string
+                  description: "book description"
+                  default: "Приключенческий роман Александра Дюма"
+                age_group:
+                  type: integer
+                  description: "book minimum age"
+                  default: 18
+                publishing_date:
+                  type: string
+                  description: "book publishing date"
+                  default: "2000-12-01"
+      responses:
+        200:
+          description: OK
+        400:
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "error"
+                  error:
+                    type: string
+                    default: "invalid request"
+        401:
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "unauthorized"
+        404:
+          description: book not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "error"
+                  error:
+                    type: string
+                    default: "book not found"
+    get:
+      tags:
+        - Book
+      summary: Get book by id
+      parameters:
+        - in: path
+          name: id
+          description: book id
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                    description: "book title"
+                    default: "Граф Монте-Кристо"
+                  description:
+                    type: string
+                    description: "book description"
+                    default: "Приключенческий роман Александра Дюма"
+                  age_group:
+                    type: integer
+                    description: "book minimum age"
+                    default: 18
+                  publishing_date:
+                    type: string
+                    description: "book publishing date"
+                    default: "2000-12-01"
+        400:
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "error"
+                  error:
+                    type: string
+                    default: "invalid request"
+        401:
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "unauthorized"
+        404:
+          description: book not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "error"
+                  error:
+                    type: string
+                    default: "book not found"
+    delete:
+      tags:
+        - Book
+      summary: Delete book by id
+      parameters:
+        - in: path
+          name: id
+          description: book id
+          required: true
+          schema:
+            type: integer
+      responses:
+        204:
+          description: OK
+        400:
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "error"
+                  error:
+                    type: string
+                    default: "invalid request"
+        401:
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "unauthorized"
+        404:
+          description: book not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "error"
+                  error:
+                    type: string
+                    default: "book not found"
+  /order:
+    post:
+      summary: Create new order
+      tags:
+        - Order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - book_title
+                - count
+              type: object
+              properties:
+                book_title:
+                  type: string
+                  description: "book title"
+                  default: "Рога и копыта"
+                count:
+                  type: integer
+                  description: "count books to order"
+                  default: 1
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "ok"
+        400:
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "error"
+                  error:
+                    type: string
+                    default: "invalid request"
+        401:
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "unauthorized"
+

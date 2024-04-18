@@ -11,8 +11,12 @@ services:
       interval: 5s
       timeout: 10s
       retries: 5
+    networks:
+      - api-network
 
   backend:
+    ports:
+      - '8080:8080'
     build:
       dockerfile: Dockerfile
     env_file:
@@ -24,3 +28,8 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - api-network
+networks:
+  api-network:
+    name: backend-network

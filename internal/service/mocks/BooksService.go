@@ -3,8 +3,8 @@
 package mocks
 
 import (
-	domain "awesomeProject/internal/domain"
 	context "context"
+	domain "simple-golang-api/internal/domain"
 
 	mock "github.com/stretchr/testify/mock"
 )
@@ -25,6 +25,72 @@ func (_m *BooksService) CreateNewBook(ctx context.Context, book *domain.Book) er
 	var r0 error
 	if rf, ok := ret.Get(0).(func(context.Context, *domain.Book) error); ok {
 		r0 = rf(ctx, book)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// DeleteBookById provides a mock function with given fields: ctx, id
+func (_m *BooksService) DeleteBookById(ctx context.Context, id int64) error {
+	ret := _m.Called(ctx, id)
+
+	if len(ret) == 0 {
+		panic("no return value specified for DeleteBookById")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, int64) error); ok {
+		r0 = rf(ctx, id)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// GetBookById provides a mock function with given fields: ctx, id
+func (_m *BooksService) GetBookById(ctx context.Context, id int64) (*domain.Book, error) {
+	ret := _m.Called(ctx, id)
+
+	if len(ret) == 0 {
+		panic("no return value specified for GetBookById")
+	}
+
+	var r0 *domain.Book
+	var r1 error
+	if rf, ok := ret.Get(0).(func(context.Context, int64) (*domain.Book, error)); ok {
+		return rf(ctx, id)
+	}
+	if rf, ok := ret.Get(0).(func(context.Context, int64) *domain.Book); ok {
+		r0 = rf(ctx, id)
+	} else {
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*domain.Book)
+		}
+	}
+
+	if rf, ok := ret.Get(1).(func(context.Context, int64) error); ok {
+		r1 = rf(ctx, id)
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// UpdateBookById provides a mock function with given fields: ctx, id, book
+func (_m *BooksService) UpdateBookById(ctx context.Context, id int64, book *domain.Book) error {
+	ret := _m.Called(ctx, id, book)
+
+	if len(ret) == 0 {
+		panic("no return value specified for UpdateBookById")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, int64, *domain.Book) error); ok {
+		r0 = rf(ctx, id, book)
 	} else {
 		r0 = ret.Error(0)
 	}

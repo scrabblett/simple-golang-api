@@ -1,13 +1,14 @@
 package handler
 
 import (
-	mw "awesomeProject/internal/handler/middleware"
-	v1 "awesomeProject/internal/handler/v1"
-	"awesomeProject/internal/service"
 	"github.com/go-chi/chi/v5"
 	"github.com/go-chi/chi/v5/middleware"
 	"go.uber.org/zap"
 	"net/http"
+	mw "simple-golang-api/internal/handler/middleware"
+	v1 "simple-golang-api/internal/handler/v1"
+	"simple-golang-api/internal/service"
+	"time"
 )
 
 type Handler struct {
@@ -20,7 +21,7 @@ func NewHandler(services *service.Services) *Handler {
 	}
 }
 
-func (h *Handler) Init() *chi.Mux {
+func (h *Handler) Init(duration time.Duration) *chi.Mux {
 	router := chi.NewRouter()
 
 	router.Use(
@@ -29,6 +30,7 @@ func (h *Handler) Init() *chi.Mux {
 		middleware.Recoverer,
 		middleware.URLFormat,
 		mw.ReqLogger(zap.L()),
+		mw.TimeoutMiddleware(duration),
 	)
 
 	router.Get("/health", func(w http.ResponseWriter, r *http.Request) {
