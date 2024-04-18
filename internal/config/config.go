@@ -14,7 +14,7 @@ type Config struct {
 type HTTPServer struct {
 	Address     string        `env:"HTTP_SERVER_ADDRESS" env-default:"localhost"`
 	Port        string        `env:"HTTP_SERVER_PORT" env-default:"8080"`
-	Timeout     time.Duration `env:"HTTP_SERVER_TIMEOUT" env-default:"5s"`
+	Timeout     time.Duration `env:"HTTP_SERVER_TIMEOUT" env-default:"15s"`
 	IdleTimeout time.Duration `env:"HTTP_SERVER_IDLE_TIMEOUT" env-default:"60s"`
 }
 

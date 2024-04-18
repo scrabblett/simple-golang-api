@@ -20,6 +20,9 @@ type UsersRepo interface {
 //go:generate mockery --name BooksRepo
 type BooksRepo interface {
 	InsertBook(ctx context.Context, book *bookModels.Book) error
+	GetBook(ctx context.Context, id int64) (*bookModels.Book, error)
+	DeleteBook(ctx context.Context, id int64) error
+	UpdateBook(ctx context.Context, id int64, book *bookModels.Book) error
 }
 
 type Repositories struct {

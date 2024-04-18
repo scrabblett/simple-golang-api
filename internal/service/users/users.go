@@ -10,7 +10,6 @@ import (
 	utils "simple-golang-api/pkg/passwords"
 )
 
-//go:generate mockery --name UsersService
 type UsersService struct {
 	repo repository.UsersRepo
 }
@@ -59,6 +58,10 @@ func (service *UsersService) SignUp(ctx context.Context, userInfo *domain.SignUp
 
 	if storedCreds != emptyCreds {
 		return domain.ErrLoginAlreadyExists
+	}
+
+	if !errors.Is(err, domain.ErrInvalidCredentials) {
+		return err
 	}
 
 	userInfo.Salt, err = utils.CreateSalt()

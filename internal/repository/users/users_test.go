@@ -25,7 +25,7 @@ func TestGetUserCredentials(t *testing.T) {
 		mockUserRepo := createMockedRepository()
 		mockUserRepo.On("GetUserCredentials", mock.Anything, login).Return(expectedCredentials, nil)
 
-		creds, err := mockUserRepo.GetUserCredentials(context.Background(), login)
+		creds, err := mockUserRepo.GetUserCredentials(context.TODO(), login)
 
 		assert.Equal(t, err, nil)
 		assert.Equal(t, creds, expectedCredentials)
@@ -37,7 +37,7 @@ func TestGetUserCredentials(t *testing.T) {
 		mockUserRepo := createMockedRepository()
 		mockUserRepo.On("GetUserCredentials", mock.Anything, login).Return(model.UserCredentials{}, expectedErr)
 
-		_, err := mockUserRepo.GetUserCredentials(context.Background(), login)
+		_, err := mockUserRepo.GetUserCredentials(context.TODO(), login)
 
 		assert.Equal(t, err, expectedErr)
 		mockUserRepo.AssertExpectations(t)
@@ -60,7 +60,7 @@ func TestSaveUserCredentials(t *testing.T) {
 		mockUserRepo := createMockedRepository()
 		mockUserRepo.On("SaveUserCredentials", mock.Anything, &userInfo).Return(expectedId, nil)
 
-		id, err := mockUserRepo.SaveUserCredentials(nil, &userInfo)
+		id, err := mockUserRepo.SaveUserCredentials(context.TODO(), &userInfo)
 
 		assert.Equal(t, err, nil)
 		assert.Equal(t, id, expectedId)
@@ -74,7 +74,7 @@ func TestSaveUserCredentials(t *testing.T) {
 			"SaveUserCredentials", mock.Anything, &userInfo,
 		).Return(int64(0), expectedErr)
 
-		_, err := mockUserRepo.SaveUserCredentials(nil, &userInfo)
+		_, err := mockUserRepo.SaveUserCredentials(context.TODO(), &userInfo)
 
 		assert.Equal(t, err, expectedErr)
 		mockUserRepo.AssertExpectations(t)
@@ -91,7 +91,7 @@ func TestSaveJWTToken(t *testing.T) {
 			"SaveJWTToken", mock.Anything, mock.AnythingOfType("int64"), mock.AnythingOfType("string"),
 		).Return(nil)
 
-		err := mockUserRepo.SaveJWTToken(nil, userId, jwt)
+		err := mockUserRepo.SaveJWTToken(context.TODO(), userId, jwt)
 
 		assert.Equal(t, err, nil)
 		mockUserRepo.AssertExpectations(t)
@@ -104,7 +104,7 @@ func TestSaveJWTToken(t *testing.T) {
 			"SaveJWTToken", mock.Anything, mock.AnythingOfType("int64"), mock.AnythingOfType("string"),
 		).Return(expectedErr)
 
-		err := mockUserRepo.SaveJWTToken(nil, userId, jwt)
+		err := mockUserRepo.SaveJWTToken(context.TODO(), userId, jwt)
 
 		assert.Equal(t, err, expectedErr)
 		mockUserRepo.AssertExpectations(t)
@@ -122,7 +122,7 @@ func TestGetJWTToken(t *testing.T) {
 			"GetJWTToken", mock.Anything, mock.AnythingOfType("int64"),
 		).Return(expectedToken, nil)
 
-		token, err := mockUserRepo.GetJWTToken(nil, userId)
+		token, err := mockUserRepo.GetJWTToken(context.TODO(), userId)
 
 		assert.Equal(t, token, expectedToken)
 		assert.Nil(t, err)
@@ -139,7 +139,7 @@ func TestGetJWTToken(t *testing.T) {
 			"GetJWTToken", mock.Anything, mock.AnythingOfType("int64"),
 		).Return(expectedToken, expectedErr)
 
-		token, err := mockUserRepo.GetJWTToken(nil, userId)
+		token, err := mockUserRepo.GetJWTToken(context.TODO(), userId)
 
 		assert.Equal(t, token, expectedToken)
 		assert.Equal(t, err, expectedErr)

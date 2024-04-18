@@ -1,13 +1,13 @@
 package books
 
 import (
+	"context"
 	"errors"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"simple-golang-api/internal/repository/books/model"
 	"simple-golang-api/internal/repository/mocks"
 	"testing"
-	"time"
 )
 
 func TestInsertBook(t *testing.T) {
@@ -15,7 +15,7 @@ func TestInsertBook(t *testing.T) {
 		Title:          "Book Title",
 		Description:    "Book Description",
 		AgeGroup:       18,
-		PublishingDate: time.Now(),
+		PublishingDate: "01-01-2000",
 	}
 
 	t.Run("success", func(t *testing.T) {
@@ -25,7 +25,7 @@ func TestInsertBook(t *testing.T) {
 			"InsertBook", mock.Anything, mock.AnythingOfType("*model.Book"),
 		).Return(nil)
 
-		err := mockedRepo.InsertBook(nil, &book)
+		err := mockedRepo.InsertBook(context.TODO(), &book)
 
 		assert.Nil(t, err)
 		mockedRepo.AssertExpectations(t)
@@ -38,7 +38,7 @@ func TestInsertBook(t *testing.T) {
 			"InsertBook", mock.Anything, mock.AnythingOfType("*model.Book"),
 		).Return(errors.New("error"))
 
-		err := mockedRepo.InsertBook(nil, &book)
+		err := mockedRepo.InsertBook(context.TODO(), &book)
 
 		assert.NotNil(t, err)
 	})

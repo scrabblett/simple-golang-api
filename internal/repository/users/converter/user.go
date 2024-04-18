@@ -16,17 +16,3 @@ func ToSignUpInfoFromService(info *domain.SignUpUser) *model.SignUpUser {
 		BirthDate:  info.BirthDate,
 	}
 }
-
-func ToCredentialsFromService(credentials *domain.UserCredentials) *model.UserCredentials {
-	return &model.UserCredentials{
-		Login:    credentials.Login,
-		Password: credentials.Password,
-	}
-}
-
-func ToCredentialsFromSignUpInfo(info *domain.SignUpUser) *domain.UserCredentials {
-	return &domain.UserCredentials{
-		Login:    info.Login,
-		Password: info.Password,
-	}
-}

@@ -20,6 +20,9 @@ type Deps struct {
 //go:generate mockery --name BooksService
 type BooksService interface {
 	CreateNewBook(ctx context.Context, book *domain.Book) error
+	GetBookById(ctx context.Context, id int64) (*domain.Book, error)
+	UpdateBookById(ctx context.Context, id int64, book *domain.Book) error
+	DeleteBookById(ctx context.Context, id int64) error
 }
 
 //go:generate mockery --name UsersService

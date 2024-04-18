@@ -5,8 +5,9 @@ import (
 	repoModel "simple-golang-api/internal/repository/books/model"
 )
 
-func ToBookFromRepo(book *repoModel.Book) *domain.Book {
-	return &domain.Book{
+func ToBookFromService(book *domain.Book) *repoModel.Book {
+	return &repoModel.Book{
+		Id:             book.Id,
 		Title:          book.Title,
 		Description:    book.Description,
 		PublishingDate: book.PublishingDate,
@@ -14,8 +15,9 @@ func ToBookFromRepo(book *repoModel.Book) *domain.Book {
 	}
 }
 
-func ToBookFromService(book *domain.Book) *repoModel.Book {
-	return &repoModel.Book{
+func ToBookFromRepo(book *repoModel.Book) *domain.Book {
+	return &domain.Book{
+		Id:             book.Id,
 		Title:          book.Title,
 		Description:    book.Description,
 		PublishingDate: book.PublishingDate,
