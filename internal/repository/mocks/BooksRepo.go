@@ -14,23 +14,43 @@ type BooksRepo struct {
 	mock.Mock
 }
 
+// DeleteBook provides a mock function with given fields: ctx, id
+func (_m *BooksRepo) DeleteBook(ctx context.Context, id int64) error {
+	ret := _m.Called(ctx, id)
+
+	if len(ret) == 0 {
+		panic("no return value specified for DeleteBook")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, int64) error); ok {
+		r0 = rf(ctx, id)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
 // GetBook provides a mock function with given fields: ctx, id
-func (_m *BooksRepo) GetBook(ctx context.Context, id int64) (model.Book, error) {
+func (_m *BooksRepo) GetBook(ctx context.Context, id int64) (*model.Book, error) {
 	ret := _m.Called(ctx, id)
 
 	if len(ret) == 0 {
 		panic("no return value specified for GetBook")
 	}
 
-	var r0 model.Book
+	var r0 *model.Book
 	var r1 error
-	if rf, ok := ret.Get(0).(func(context.Context, int64) (model.Book, error)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, int64) (*model.Book, error)); ok {
 		return rf(ctx, id)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, int64) model.Book); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, int64) *model.Book); ok {
 		r0 = rf(ctx, id)
 	} else {
-		r0 = ret.Get(0).(model.Book)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*model.Book)
+		}
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, int64) error); ok {
@@ -53,6 +73,24 @@ func (_m *BooksRepo) InsertBook(ctx context.Context, book *model.Book) error {
 	var r0 error
 	if rf, ok := ret.Get(0).(func(context.Context, *model.Book) error); ok {
 		r0 = rf(ctx, book)
+	} else {
+		r0 = ret.Error(0)
+	}
+
+	return r0
+}
+
+// UpdateBook provides a mock function with given fields: ctx, id, book
+func (_m *BooksRepo) UpdateBook(ctx context.Context, id int64, book *model.Book) error {
+	ret := _m.Called(ctx, id, book)
+
+	if len(ret) == 0 {
+		panic("no return value specified for UpdateBook")
+	}
+
+	var r0 error
+	if rf, ok := ret.Get(0).(func(context.Context, int64, *model.Book) error); ok {
+		r0 = rf(ctx, id, book)
 	} else {
 		r0 = ret.Error(0)
 	}

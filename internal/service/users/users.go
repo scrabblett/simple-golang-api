@@ -10,7 +10,6 @@ import (
 	utils "simple-golang-api/pkg/passwords"
 )
 
-//go:generate mockery --name UsersService
 type UsersService struct {
 	repo repository.UsersRepo
 }

@@ -414,4 +414,60 @@ paths:
                   error:
                     type: string
                     default: "book not found"
+  /order:
+    post:
+      summary: Create new order
+      tags:
+        - Order
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+                - book_title
+                - count
+              type: object
+              properties:
+                book_title:
+                  type: string
+                  description: "book title"
+                  default: "Рога и копыта"
+                count:
+                  type: integer
+                  description: "count books to order"
+                  default: 1
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "ok"
+        400:
+          description: invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "error"
+                  error:
+                    type: string
+                    default: "invalid request"
+        401:
+          description: unauthorized
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    default: "unauthorized"
 

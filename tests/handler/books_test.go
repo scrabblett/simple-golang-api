@@ -1,3 +1,5 @@
+//go:build integration_test
+
 package handler
 
 import (
@@ -11,7 +13,7 @@ import (
 )
 
 const (
-	booksPath = basePath + "/books"
+	booksPath = basePath + "/book"
 )
 
 func TestCreateBook(t *testing.T) {
