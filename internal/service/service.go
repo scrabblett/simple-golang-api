@@ -17,7 +17,7 @@ type Deps struct {
 	Repos *repository.Repositories
 }
 
-//go:generate mockery --name BooksService
+//go:generate mockery
 type BooksService interface {
 	CreateNewBook(ctx context.Context, book *domain.Book) error
 	GetBookById(ctx context.Context, id int64) (*domain.Book, error)
@@ -25,7 +25,7 @@ type BooksService interface {
 	DeleteBookById(ctx context.Context, id int64) error
 }
 
-//go:generate mockery --name UsersService
+//go:generate mockery
 type UsersService interface {
 	SignIn(ctx context.Context, credentials *domain.UserCredentials) (string, error)
 	SignUp(ctx context.Context, userInfo *domain.SignUpUser) error

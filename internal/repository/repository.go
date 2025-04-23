@@ -9,7 +9,7 @@ import (
 	userModels "simple-golang-api/internal/repository/users/model"
 )
 
-//go:generate mockery --name UsersRepo
+//go:generate mockery
 type UsersRepo interface {
 	GetUserCredentials(ctx context.Context, login string) (userModels.UserCredentials, error)
 	SaveUserCredentials(ctx context.Context, userInfo *userModels.SignUpUser) (int64, error)
@@ -17,7 +17,7 @@ type UsersRepo interface {
 	GetJWTToken(ctx context.Context, userId int64) (string, error)
 }
 
-//go:generate mockery --name BooksRepo
+//go:generate mockery
 type BooksRepo interface {
 	InsertBook(ctx context.Context, book *bookModels.Book) error
 	GetBook(ctx context.Context, id int64) (*bookModels.Book, error)
